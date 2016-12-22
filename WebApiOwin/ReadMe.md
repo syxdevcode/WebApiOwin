@@ -1,0 +1,1 @@
+﻿参考：http://www.cnblogs.com/xishuai/p/aspnet-webapi-owin-oauth2.html
