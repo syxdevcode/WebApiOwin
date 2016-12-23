@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -120,16 +124,30 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\DependencyInjectionConfig.cs" />
+    <Compile Include="App_Start\IocContainer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CodesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\RefreshToken.cs" />
+    <Compile Include="PersistenceProvider\AuthorizationServerProvider.cs" />
+    <Compile Include="PersistenceProvider\RefreshTokenProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\OpenAuthorizationClientGrantServerProvider.cs" />
     <Compile Include="Provider\OpenAuthorizationCodeProvider.cs" />
     <Compile Include="Provider\OpenAuthorizationCodeServerProvider.cs" />
     <Compile Include="Provider\OpenAuthorizationPasswdServerProvider.cs" />
     <Compile Include="Provider\OpenRefreshTokenProvider.cs" />
+    <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="Repository\IClientRepository.cs" />
+    <Compile Include="Repository\IRefreshTokenRepository.cs" />
+    <Compile Include="Repository\RefreshTokenRepository.cs" />
+    <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Services\IClientService.cs" />
+    <Compile Include="Services\IRefreshTokenService.cs" />
+    <Compile Include="Services\RefreshTokenService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

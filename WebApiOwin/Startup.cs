@@ -1,6 +1,7 @@
 ﻿using Owin;
 using Microsoft.Owin;
 using System.Web.Http;
+using WebApiOwin.App_Start;
 
 [assembly:OwinStartup(typeof(WebApiOwin.Startup))]
 namespace WebApiOwin
@@ -13,6 +14,9 @@ namespace WebApiOwin
             ConfigureAuth(app);
 
             var configuration = new HttpConfiguration();
+
+            DependencyInjectionConfig.Register();
+
             WebApiConfig.Register(configuration);
             app.UseWebApi(configuration);
         }
