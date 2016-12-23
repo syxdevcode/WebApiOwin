@@ -7,6 +7,9 @@ using System.Web;
 
 namespace WebApiOwin.Provider
 {
+    /// <summary>
+    /// refresh_token 认证服务
+    /// </summary>
     public class OpenRefreshTokenProvider : AuthenticationTokenProvider
     {
         private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();

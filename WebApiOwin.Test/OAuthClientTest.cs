@@ -32,7 +32,7 @@ namespace WebApiOwin.Test
 
         private static async Task<TokenResponse> GetToken(string grantType, string refreshToken = null, string userName = null, string password = null, string authorizationCode = null)
         {
-            var clientId = "xishuai";
+            var clientId = "WebApiOwin";
             var clientSecret = "123";
             var parameters = new Dictionary<string, string>();
             parameters.Add("grant_type", grantType);
@@ -69,7 +69,7 @@ namespace WebApiOwin.Test
 
         private static async Task<string> GetAuthorizationCode()
         {
-            var clientId = "xishuai";
+            var clientId = "WebApiOwin";
 
             var response = await _httpClient.GetAsync($"/authorize?grant_type=authorization_code&response_type=code&client_id={clientId}&redirect_uri={HttpUtility.UrlEncode("http://localhost:8001/api/authorization_code")}");
             var authorizationCode = await response.Content.ReadAsStringAsync();
@@ -82,6 +82,10 @@ namespace WebApiOwin.Test
             return authorizationCode;
         }
 
+        /// <summary>
+        /// 测试通过
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task OAuth_ClientCredentials_Test()
         {
@@ -105,10 +109,14 @@ namespace WebApiOwin.Test
             Assert.Equal(HttpStatusCode.OK, responseTwo.StatusCode);
         }
 
+        /// <summary>
+        /// 测试通过
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task OAuth_Password_Test()
         {
-            var tokenResponse = GetToken("password", null, "xishuai", "123").Result; //获取 access_token
+            var tokenResponse = GetToken("password", null, "WebApiOwin", "123").Result; //获取 access_token
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
 
             var response = await _httpClient.GetAsync($"/api/values");
@@ -128,6 +136,10 @@ namespace WebApiOwin.Test
             Assert.Equal(HttpStatusCode.OK, responseTwo.StatusCode);
         }
 
+        /// <summary>
+        /// 测试通过
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task OAuth_AuthorizationCode_Test()
         {
@@ -152,14 +164,26 @@ namespace WebApiOwin.Test
             Assert.Equal(HttpStatusCode.OK, responseTwo.StatusCode);
         }
 
+        /// <summary>
+        /// 测试通过
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task OAuth_Implicit_Test()
         {
-            var clientId = "xishuai";
+            var clientId = "WebApiOwin";
 
             var tokenResponse = await _httpClient.GetAsync($"/authorize?response_type=token&client_id={clientId}&redirect_uri={HttpUtility.UrlEncode("http://localhost:8001/api/access_token")}");
             //redirect_uri: http://localhost:8001/api/access_token#access_token=AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAfoPB4HZ0PUe-X6h0UUs2q42&token_type=bearer&expires_in=10
-            var accessToken = "";//get form redirect_uri
+            var accessTokenUrl = tokenResponse.RequestMessage.RequestUri.Fragment;//get form redirect_uri
+
+            string startStr = "#access_token=";
+            string endStr = "&token_type";
+            
+            int end = accessTokenUrl.IndexOf(endStr);
+
+            string accessToken = accessTokenUrl.Substring(startStr.Length, end- startStr.Length);
+
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var response = await _httpClient.GetAsync($"/api/values");
@@ -170,6 +194,7 @@ namespace WebApiOwin.Test
             }
             Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            
         }
     }
 }

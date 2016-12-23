@@ -7,6 +7,9 @@ using System.Web;
 
 namespace WebApiOwin.Provider
 {
+    /// <summary>
+    /// authorization_code 认证服务
+    /// </summary>
     public class OpenAuthorizationCodeProvider: AuthenticationTokenProvider
     {
         private readonly ConcurrentDictionary<string, string> _authenticationCodes = new ConcurrentDictionary<string, string>(StringComparer.Ordinal);

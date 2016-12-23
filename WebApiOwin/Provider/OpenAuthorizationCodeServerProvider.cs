@@ -11,7 +11,10 @@ using System.Web;
 
 namespace WebApiOwin.Provider
 {
-    public class OpenAuthorizationServerProvider : OAuthAuthorizationServerProvider
+    /// <summary>
+    /// 授权码模式（authorization code）
+    /// </summary>
+    public class OpenAuthorizationCodeServerProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
         /// 验证 client 信息
@@ -25,53 +28,14 @@ namespace WebApiOwin.Provider
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
-            if (clientId != "xishuai" || clientSecret != "123")
+            if (clientId != "WebApiOwin")
             {
                 context.SetError("invalid_client", "client or clientSecret is not valid");
                 return;
             }
             context.Validated();
         }
-
-        /// <summary>
-        /// 生成 access_token（client credentials 授权方式）
-        /// </summary>
-        public override async Task GrantClientCredentials(OAuthGrantClientCredentialsContext context)
-        {
-            var identity = new ClaimsIdentity(new GenericIdentity(
-                context.ClientId, OAuthDefaults.AuthenticationType),
-                context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
-
-            context.Validated(identity);
-        }
-
-        /// <summary>
-        /// 生成 access_token（resource owner password credentials 授权方式）
-        /// </summary>
-        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-        {
-            if (string.IsNullOrEmpty(context.UserName))
-            {
-                context.SetError("invalid_username", "username is not valid");
-                return;
-            }
-            if (string.IsNullOrEmpty(context.Password))
-            {
-                context.SetError("invalid_password", "password is not valid");
-                return;
-            }
-
-            if (context.UserName != "xishuai" || context.Password != "123")
-            {
-                context.SetError("invalid_identity", "username or password is not valid");
-                return;
-            }
-
-            var OAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
-            OAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            context.Validated(OAuthIdentity);
-        }
-
+        
         /// <summary>
         /// 生成 authorization_code（authorization code 授权方式）、生成 access_token （implicit 授权模式）
         /// </summary>
@@ -118,7 +82,7 @@ namespace WebApiOwin.Provider
         /// </summary>
         public override async Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
         {
-            if (context.AuthorizeRequest.ClientId == "xishuai" &&
+            if (context.AuthorizeRequest.ClientId == "WebApiOwin" &&
                 (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
             {
                 context.Validated();

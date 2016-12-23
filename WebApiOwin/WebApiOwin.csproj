@@ -125,8 +125,10 @@
     <Compile Include="Controllers\CodesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\OpenAuthorizationClientGrantServerProvider.cs" />
     <Compile Include="Provider\OpenAuthorizationCodeProvider.cs" />
-    <Compile Include="Provider\OpenAuthorizationServerProvider.cs" />
+    <Compile Include="Provider\OpenAuthorizationCodeServerProvider.cs" />
+    <Compile Include="Provider\OpenAuthorizationPasswdServerProvider.cs" />
     <Compile Include="Provider\OpenRefreshTokenProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
