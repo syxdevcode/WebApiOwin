@@ -32,7 +32,7 @@ namespace WebApiOwin.Test
 
         private static async Task<TokenResponse> GetToken(string grantType, string refreshToken = null, string userName = null, string password = null, string authorizationCode = null)
         {
-            var clientId = "WebApiOwin";
+            var clientId = Guid.NewGuid().ToString();//"WebApiOwin";
             var clientSecret = "123";
             var parameters = new Dictionary<string, string>();
             parameters.Add("grant_type", grantType);
@@ -195,6 +195,34 @@ namespace WebApiOwin.Test
             Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             
+        }
+
+
+        /// <summary>
+        /// 测试通过
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task Persistence_OAuth_Password_Test()
+        {
+            var tokenResponse = GetToken("password", null, "WebApiOwin", "123").Result; //获取 access_token
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
+
+            var response = await _httpClient.GetAsync($"/api/values");
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine((await response.Content.ReadAsAsync<HttpError>()).ExceptionMessage);
+            }
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            Thread.Sleep(10000);
+
+            var tokenResponseTwo = GetToken("refresh_token", tokenResponse.RefreshToken).Result;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponseTwo.AccessToken);
+            var responseTwo = await _httpClient.GetAsync($"/api/values");
+            Assert.Equal(HttpStatusCode.OK, responseTwo.StatusCode);
         }
     }
 }

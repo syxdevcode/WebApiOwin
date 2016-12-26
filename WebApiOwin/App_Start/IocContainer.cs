@@ -1,33 +1,24 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using WebApiOwin.PersistenceProvider;
+using WebApiOwin.Repository;
+using WebApiOwin.Services;
 
 namespace WebApiOwin.App_Start
 {
     public class IocContainer
     {
-        private static volatile ContainerBuilder instance = null;
+        public static IContainer Default;
 
-        private static object syncRoot = new object();
-
-        public static ContainerBuilder Instance
+        public static void Register()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (instance == null)
-                            instance = new ContainerBuilder();
-                    }
-                }
-
-                return instance;
-            }
+            var builder = new ContainerBuilder();
+            builder.RegisterType<RefreshTokenService>().As<IRefreshTokenService>();
+            builder.RegisterType<RefreshTokenRepository>().As<IRefreshTokenRepository>();
+            builder.RegisterType<ClientService>().As<IClientService>();
+            builder.RegisterType<AuthorizationServerProvider>();
+            builder.RegisterType<RefreshTokenProvider>();
+            Default = builder.Build();
         }
-        
     }
+
 }

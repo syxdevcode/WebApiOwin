@@ -10,7 +10,7 @@ using WebApiOwin.Models;
 
 namespace WebApiOwin.Repository
 {
-    public class ClientRepository:IClientRepository
+    public class ClientRepository : IClientRepository
     {
         private static readonly Client[] _clients;
 

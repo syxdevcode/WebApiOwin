@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using WebApiOwin.App_Start;
 using WebApiOwin.Provider;
+using Autofac;
+using WebApiOwin.PersistenceProvider;
 
 namespace WebApiOwin
 {
@@ -15,6 +17,8 @@ namespace WebApiOwin
     {
         public void ConfigureAuth(IAppBuilder app)
         {
+            ContainerBuilder builder = new ContainerBuilder();
+
             var OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
@@ -22,9 +26,9 @@ namespace WebApiOwin
                 TokenEndpointPath = new PathString("/token"), //获取 access_token 认证服务请求地址
                 AuthorizeEndpointPath = new PathString("/authorize"), //获取 authorization_code 认证服务请求地址
                 AccessTokenExpireTimeSpan = TimeSpan.FromSeconds(10), //access_token 过期时间
-
-                Provider = IocContainer.Instance.Resolve<CNBlogsAuthorizationServerProvider>(),
-                RefreshTokenProvider = IocContainer.Resolver.Resolve<CNBlogsRefreshTokenProvider>()
+                
+                Provider = IocContainer.Default.Resolve<AuthorizationServerProvider>(),
+                RefreshTokenProvider = IocContainer.Default.Resolve<RefreshTokenProvider>()
 
                 #region 授权码模式（authorization code）
                 /*

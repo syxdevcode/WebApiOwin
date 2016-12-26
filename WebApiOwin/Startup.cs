@@ -10,12 +10,13 @@ namespace WebApiOwin
     {
         public void Configuration(IAppBuilder app)
         {
+            IocContainer.Register();
+
             // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=316888
             ConfigureAuth(app);
 
             var configuration = new HttpConfiguration();
 
-            DependencyInjectionConfig.Register();
 
             WebApiConfig.Register(configuration);
             app.UseWebApi(configuration);
