@@ -3,11 +3,9 @@ using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace WebApiOwin.Provider
 {
@@ -35,7 +33,7 @@ namespace WebApiOwin.Provider
             }
             context.Validated();
         }
-        
+
         /// <summary>
         /// 生成 authorization_code（authorization code 授权方式）、生成 access_token （implicit 授权模式）
         /// </summary>

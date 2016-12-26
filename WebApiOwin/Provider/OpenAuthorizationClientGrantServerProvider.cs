@@ -1,18 +1,15 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace WebApiOwin.Provider
 {
     /// <summary>
     /// 客户端模式（Client Credentials Grant）
     /// </summary>
-    public class OpenAuthorizationClientGrantServerProvider: OAuthAuthorizationServerProvider
+    public class OpenAuthorizationClientGrantServerProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
         /// 验证 client 信息

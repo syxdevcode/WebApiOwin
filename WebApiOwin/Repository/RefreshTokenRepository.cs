@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Hosting;
 using WebApiOwin.Models;
 
 namespace WebApiOwin.Repository
 {
-    public class RefreshTokenRepository:IRefreshTokenRepository
+    public class RefreshTokenRepository : IRefreshTokenRepository
     {
         private string _jsonFilePath;
         private List<RefreshToken> _refreshTokens;
@@ -22,7 +20,6 @@ namespace WebApiOwin.Repository
             {
                 var json = File.ReadAllText(_jsonFilePath);
                 _refreshTokens = JsonConvert.DeserializeObject<List<RefreshToken>>(json);
-
             }
             if (_refreshTokens == null) _refreshTokens = new List<RefreshToken>();
         }

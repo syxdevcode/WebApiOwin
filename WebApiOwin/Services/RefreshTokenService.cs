@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using WebApiOwin.Models;
 using WebApiOwin.Repository;
 
 namespace WebApiOwin.Services
 {
-    public class RefreshTokenService: IRefreshTokenService
+    public class RefreshTokenService : IRefreshTokenService
     {
         private IRefreshTokenRepository _refreshTokenRepository;
 

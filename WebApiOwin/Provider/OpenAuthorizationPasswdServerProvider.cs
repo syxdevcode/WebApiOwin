@@ -1,17 +1,13 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace WebApiOwin.Provider
 {
     /// <summary>
     /// 密码模式（resource owner password credentials）
     /// </summary>
-    public class OpenAuthorizationPasswdServerProvider: OAuthAuthorizationServerProvider
+    public class OpenAuthorizationPasswdServerProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
         /// 验证 client 信息
@@ -20,7 +16,7 @@ namespace WebApiOwin.Provider
         {
             string clientId;
             string clientSecret;
-            if(!context.TryGetBasicCredentials(out clientId,out clientSecret))
+            if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
             {
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
@@ -31,6 +27,7 @@ namespace WebApiOwin.Provider
             }
             context.Validated();
         }
+
         /// <summary>
         /// 生成 access_token（resource owner password credentials 授权方式）
         /// </summary>

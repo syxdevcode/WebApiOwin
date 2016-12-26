@@ -1,16 +1,12 @@
 ﻿using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using WebApiOwin.Services;
 
 namespace WebApiOwin.PersistenceProvider
 {
-    public class AuthorizationServerProvider: OAuthAuthorizationServerProvider
+    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         private IClientService _clientService;
 
@@ -47,7 +43,7 @@ namespace WebApiOwin.PersistenceProvider
         public override async Task GrantResourceOwnerCredentials(
             OAuthGrantResourceOwnerCredentialsContext context)
         {
-            //验证context.UserName与context.Password 
+            //验证context.UserName与context.Password
             var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
             oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             context.Validated(oAuthIdentity);

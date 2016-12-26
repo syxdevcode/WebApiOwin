@@ -1,7 +1,6 @@
 ﻿using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -27,7 +26,6 @@ namespace WebApiOwin.Test
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(HOST_ADDRESS);
             Console.WriteLine("HttpClient started!");
-
         }
 
         private static async Task<TokenResponse> GetToken(string grantType, string refreshToken = null, string userName = null, string password = null, string authorizationCode = null)
@@ -179,10 +177,10 @@ namespace WebApiOwin.Test
 
             string startStr = "#access_token=";
             string endStr = "&token_type";
-            
+
             int end = accessTokenUrl.IndexOf(endStr);
 
-            string accessToken = accessTokenUrl.Substring(startStr.Length, end- startStr.Length);
+            string accessToken = accessTokenUrl.Substring(startStr.Length, end - startStr.Length);
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
@@ -194,9 +192,7 @@ namespace WebApiOwin.Test
             }
             Console.WriteLine(await response.Content.ReadAsStringAsync());
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            
         }
-
 
         /// <summary>
         /// 测试通过

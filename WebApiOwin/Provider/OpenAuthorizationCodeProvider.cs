@@ -1,16 +1,13 @@
 ﻿using Microsoft.Owin.Security.Infrastructure;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApiOwin.Provider
 {
     /// <summary>
     /// authorization_code 认证服务
     /// </summary>
-    public class OpenAuthorizationCodeProvider: AuthenticationTokenProvider
+    public class OpenAuthorizationCodeProvider : AuthenticationTokenProvider
     {
         private readonly ConcurrentDictionary<string, string> _authenticationCodes = new ConcurrentDictionary<string, string>(StringComparer.Ordinal);
 

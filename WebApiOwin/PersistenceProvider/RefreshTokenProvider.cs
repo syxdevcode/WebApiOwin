@@ -1,16 +1,13 @@
 ﻿using Microsoft.Owin.Security.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebApiOwin.Models;
-using System.Web;
 using WebApiOwin.Services;
 
 namespace WebApiOwin.PersistenceProvider
 {
-    public class RefreshTokenProvider: AuthenticationTokenProvider
+    public class RefreshTokenProvider : AuthenticationTokenProvider
     {
         private IRefreshTokenService _refreshTokenService;
 
